@@ -21,10 +21,32 @@ Route::get('hello/:name', 'index/hello');
 Route::group('', function () {
     Route::post('/user/login', 'user/login');
     Route::post('/user/register', 'user/register');
+
+    Route::post('/admin/login','admin/login');
 });
 
 
 Route::group('/api', function () {
     Route::get('/user/getall', 'user/getAll');
+
     Route::get('/user/:id', 'user/getById');
+
+    Route::get('/user/getpage','user/getPage');
+
+    Route::post('/user/resetpwd','user/resetPwd');
+
+    Route::delete('/user/delete/:id','user/deleteUserById');
+    
+    Route::post('/user/edit','user/editUser');
+
+    Route::post('/admin/add','admin/addAdmin');
+
+    Route::post('/admin/edit','admin/editAdmin');
+
+    Route::delete('/admin/delete/:id','admin/deleteAdmin');
+
+    Route::get('/admin/getall','admin/getAdmin');
+
+    Route::get('/admin/getpage','admin/getPage');
+
 })->middleware(JwtMiddleware::class);

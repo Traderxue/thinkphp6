@@ -5,7 +5,6 @@ use app\BaseController;
 use think\Request;
 use app\model\User as UserModel;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 
 class User extends BaseController
 {
@@ -84,5 +83,60 @@ class User extends BaseController
             return $this->result(200,"查询成功",$user);
         }
         return $this->result(400,"没有找到用户",null);
+    }
+
+    function resetPwd(Request $request){
+        $username = $request->post('username');
+        $password = $request->post('password');
+        $new_password = password_hash($request->post('new_password'),PASSWORD_DEFAULT);
+        $user = UserModel::where('username','=',$username)->find();
+        if(!$user){
+            return $this->result(400,"用户不存在",null);
+        }
+        if(!password_verify($password,$user->password)){
+            return $this->result(400,"旧密码错误",null);
+        }
+        $res = UserModel::where('username','=',$username)->update(['password'=>$new_password]);
+        if($res){
+            return $this->result(200,"修改成功",null);
+        }
+        return $this->result(400,"修改失败",null);
+
+    }
+
+    function deleteUserById($id){
+        $user = UserModel::where('id','=',$id)->where('is_deleted','=',0)->find();
+        if(!$user){
+            return $this->result(400,"用户不存在",null);
+        }
+        $res = UserModel::where('id',$id)->update(['is_deleted'=>1]);
+        if($res){
+            return $this->result(200,"删除成功",null);
+        }
+        return $this->result(400,"删除失败",null);
+    }
+
+    function editUser(Request $request){
+        $id = $request->post('id');
+        $is_deleted = $request->post('is_deleted');
+        $money = $request->post('money');
+        $res = UserModel::where('id','=',$id)->update(['id_deleted'=>$is_deleted,'money'=>$money]);
+        if($res){
+            return $this->result(200,"更新成功",null);
+        }
+        return $this->result(400,"更新失败",null);
+    }
+
+    function getPage(Request $request){
+        $page = $request->param('page',1);
+        $pageSize = $request->param('pageSize',10);
+
+        $user = UserModel::field('id, username, is_deleted,money')->paginate([
+            'page' => $page,
+            'list_rows' => $pageSize,
+        ]);
+
+        return $this->result(200,"查询成功",$user);
+
     }
 }
