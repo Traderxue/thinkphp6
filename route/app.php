@@ -49,4 +49,8 @@ Route::group('/api', function () {
 
     Route::get('/admin/getpage','admin/getPage');
 
+    Route::get('/order/getpage','order/getPage');
+    
+    Route::post('/order/edit','order/editPage');
+
 })->middleware(JwtMiddleware::class);
