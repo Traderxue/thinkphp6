@@ -42,12 +42,28 @@ return axios({
 
 
 ### 订单
-| 接口         | 路径                 | 请求方式 | 参数                    | 访问权限 |
-| ------------ | -------------------- | -------- | ----------------------- | -------- |
-| 分页获取订单 | `/api/order/getpage` | GET      | page,pageSize           | 否       |
-| 编辑订单     | `/api/order/edit`    | POST     | id,margin,num,direction | 否       |
+| 接口               | 路径                    | 请求方式 | 参数                    | 访问权限 |
+| ------------------ | ----------------------- | -------- | ----------------------- | -------- |
+| 分页获取订单       | `/api/order/getpage`    | GET      | page,pageSize           | token    |
+| 编辑订单           | `/api/order/edit`       | POST     | id,margin,num,direction | token    |
+| 添加订单           | `/api/order/add`        | POST     | 参数如下                | token    |
+| 删除订单           | `/api/order/delete/:id` | DELETE   | id                      | token    |
+| 根据用户id获取订单 | `/api/order/user/:u_id` | GET      | id                      | token    |
 
 ```sh
-id,margin,num,direction 
-订单id  保证金  开仓数量 开仓方向0多1空
+ 添加订单参数
+{
+  "buy_price":1678,
+  "margin":"10000",
+  "num":1000,
+  "direction":0,
+  "u_id":3,
+  "position":1
+}
+开仓价
+保证金
+开仓数量
+开仓方向0多1空
+用户id
+是否平仓1持仓0已平仓
 ```

@@ -53,4 +53,10 @@ Route::group('/api', function () {
     
     Route::post('/order/edit','order/editPage');
 
+    Route::post('/order/add','order/addOrder');
+
+    Route::delete('/order/delete/:id','order/deleteOrder');
+
+    Route::get('/order/user/:u_id','order/getByUserId');
+
 })->middleware(JwtMiddleware::class);
