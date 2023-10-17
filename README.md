@@ -67,3 +67,13 @@ return axios({
 用户id
 是否平仓1持仓0已平仓
 ```
+### 充值记录
+| 接口         | 路径                    | 请求方式 | 参数            | 访问权限 |
+| ------------ | ----------------------- | -------- | --------------- | -------- |
+| 获取充值记录 | `/api/recharge/getpage` | GET      | page,pageSize   | token    |
+| 获取充值记录 | `/api/recharge/delete`  | DELETE   | id              | token    |
+| 添加充值记录 | `/api/recharge/add`     | POST     | money,type,u_id | token    |
+
+```sh
+
+```
